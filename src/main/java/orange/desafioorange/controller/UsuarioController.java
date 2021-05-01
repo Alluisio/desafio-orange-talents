@@ -1,5 +1,6 @@
 package orange.desafioorange.controller;
 
+import orange.desafioorange.dto.UsuarioDTO;
 import orange.desafioorange.model.Usuario;
 import orange.desafioorange.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,13 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Usuario findById(@PathVariable Long id) {
-        return usuarioRepository.findById(id).get();
+    public UsuarioDTO findById(@PathVariable Long id) {
+        return new UsuarioDTO(usuarioRepository.findById(id).get());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario save(@RequestBody Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioDTO save(@RequestBody Usuario usuario) {
+        return new UsuarioDTO(usuarioRepository.save(usuario));
     }
 }

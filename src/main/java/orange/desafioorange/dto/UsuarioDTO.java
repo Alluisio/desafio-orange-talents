@@ -1,18 +1,15 @@
-package orange.desafioorange.model;
+package orange.desafioorange.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import orange.desafioorange.model.Usuario;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "usuario", schema = "desafio_orange")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UsuarioDTO {
 
     private String nome;
 
@@ -23,15 +20,17 @@ public class Usuario {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Endereco> enderecos;
+    private List<EnderecoDTO> enderecos;
 
-    public Long getId() {
-        return id;
-    }
+    public UsuarioDTO(Usuario usuario) {
+        setNome(usuario.getNome());
+        setCpf(usuario.getCpf());
+        setEmail(usuario.getEmail());
+        setDataNascimento(usuario.getDataNascimento());
 
-    public void setId(Long id) {
-        this.id = id;
+        if (usuario.getEnderecos() != null) {
+            setEnderecos(usuario.getEnderecos().stream().map(EnderecoDTO::new).collect(Collectors.toList()));
+        }
     }
 
     public String getNome() {
@@ -66,11 +65,11 @@ public class Usuario {
         this.dataNascimento = dataNascimento;
     }
 
-    public List<Endereco> getEnderecos() {
+    public List<EnderecoDTO> getEnderecos() {
         return enderecos;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
+    public void setEnderecos(List<EnderecoDTO> enderecos) {
         this.enderecos = enderecos;
     }
 }
