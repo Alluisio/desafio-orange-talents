@@ -1,6 +1,8 @@
 package orange.desafioorange.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "endereco", schema = "desafio_orange")
@@ -13,6 +15,8 @@ public class Endereco {
     @ManyToOne
     private Usuario usuario;
 
+    @NotBlank
+    @Size(min = 8, max = 9)
     private String cep;
 
     private String logradouro;
@@ -23,6 +27,7 @@ public class Endereco {
 
     private String estado;
 
+    @NotBlank
     private String numero;
 
     private String cidade;

@@ -1,8 +1,12 @@
 package orange.desafioorange.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,12 +18,18 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String nome;
 
+    @Email
+    @NotBlank
     private String email;
 
+    @CPF
+    @NotBlank
     private String cpf;
 
+    @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
